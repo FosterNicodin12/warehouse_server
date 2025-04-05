@@ -1,0 +1,27 @@
+{
+  "name": "warehouse_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FosterNicodin12/warehouse_server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FosterNicodin12/warehouse_server/issues"
+  },
+  "homepage": "https://github.com/FosterNicodin12/warehouse_server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "multer": "^1.4.5-lts.2"
+  }
+}
