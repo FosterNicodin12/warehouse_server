@@ -12,207 +12,207 @@ app.get("/",(req, res)=>{
 const bays = [[
   {
     "bay_number": "Pallets",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   },
   {
     "bay_number": "A1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "B1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "C1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "D1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "E1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "F1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "G1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "H1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "I1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "J1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "K1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "Open",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   },
   {
     "bay_number": "Aisle1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "Aisle2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "Aisle3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle4",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle5",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle6",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle7",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle8",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle9",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle10",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
     "container_number": "",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle11",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "Dock 3",
-    "company": "",
+    "company": " ",
     "picture": "dock.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "dock"
   },
   {
     "bay_number": "Aisle12",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "B2",
-    "company": "",
+    "company": " ",
     "picture": "load2.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -220,7 +220,7 @@ const bays = [[
   },
   {
     "bay_number": "C2",
-    "company": "",
+    "company": " ",
     "picture": "load4.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -228,7 +228,7 @@ const bays = [[
   },
   {
     "bay_number": "D2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -236,15 +236,15 @@ const bays = [[
   },
   {
     "bay_number": "E2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "F2",
-    "company": "",
+    "company": " ",
     "picture": "load1.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -252,7 +252,7 @@ const bays = [[
   },
   {
     "bay_number": "G2",
-    "company": "",
+    "company": " ",
     "picture": "load1.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -260,7 +260,7 @@ const bays = [[
   },
   {
     "bay_number": "H2",
-    "company": "",
+    "company": " ",
     "picture": "load3.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -268,7 +268,7 @@ const bays = [[
   },
   {
     "bay_number": "I2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
     "container_number": "",
     "is_full": false,
@@ -276,47 +276,47 @@ const bays = [[
   },
   {
     "bay_number": "J2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "K2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "Dock 2",
-    "company": "",
+    "company": " ",
     "picture": "dock.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "dock"
   },
   {
     "bay_number": "Aisle13",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "B3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "C3",
-    "company": "",
+    "company": " ",
     "picture": "load1.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -324,23 +324,23 @@ const bays = [[
   },
   {
     "bay_number": "D3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "E3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "F3",
-    "company": "",
+    "company": " ",
     "picture": "load1.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -348,15 +348,15 @@ const bays = [[
   },
   {
     "bay_number": "G3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "H3",
-    "company": "",
+    "company": " ",
     "picture": "load4.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -364,23 +364,23 @@ const bays = [[
   },
   {
     "bay_number": "I3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "J3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "rack"
   },
   {
     "bay_number": "K3",
-    "company": "",
+    "company": " ",
     "picture": "load2.heic",
     "container_number": "TEST-1342-9",
     "is_full": true,
@@ -388,124 +388,124 @@ const bays = [[
   },
   {
     "bay_number": "Dock 1",
-    "company": "",
+    "company": " ",
     "picture": "dock.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "dock"
   },
   {
     "bay_number": "Aisle14",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "Aisle15",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle16",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle17",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle18",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle19",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle20",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle21",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle22",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle23",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   }, {
     "bay_number": "Aisle24",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "aisle"
   },
   {
     "bay_number": "Open1",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   }, {
     "bay_number": "Open2",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   }, {
     "bay_number": "Open3",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   }, {
     "bay_number": "Open4",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   }, {
     "bay_number": "Open5",
-    "company": "",
+    "company": " ",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "open"
   },
@@ -513,7 +513,7 @@ const bays = [[
     "bay_number": "Office 1",
     "company": "Administrative",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "office"
   },
@@ -521,13 +521,13 @@ const bays = [[
     "bay_number": "Office 2",
     "company": "Logistics",
     "picture": "empty.heic",
-    "container_number": "",
+    "container_number": " ",
     "is_full": false,
     "contents": "office"
   },
   {
     "bay_number": "G4",
-    "company": "",
+    "company": " ",
     "picture": "load3.heic",
     "container_number": "MTSU-4124-1",
     "is_full": true,
@@ -535,7 +535,7 @@ const bays = [[
   },
     {
       "bay_number": "H4",
-      "company": "",
+      "company": " ",
       "picture": "load2.heic",
       "container_number": "MTSU-8704-6",
       "is_full": true,
@@ -543,7 +543,7 @@ const bays = [[
     },
     {
       "bay_number": "I4",
-      "company": "",
+      "company": " ",
       "picture": "load3.heic",
       "container_number": "XMRU-1234-6",
       "is_full": true,
@@ -551,7 +551,7 @@ const bays = [[
     },
     {
       "bay_number": "J4",
-      "company": "",
+      "company": " ",
       "picture": "load1.heic",
       "container_number": "TEST-1342-9",
       "is_full": true,
@@ -559,9 +559,9 @@ const bays = [[
     },
     {
       "bay_number": "K4",
-      "company": "",
+      "company": " ",
       "picture": "empty.heic",
-      "container_number": "",
+      "container_number": " ",
       "is_full": false,
       "contents": "rack"
     }
