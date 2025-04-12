@@ -599,7 +599,7 @@ app.post("/api/bays", upload.single("picture"), (req,res)=>{
         company: req.body.company,
         container_number: req.body.container_number,
         is_full: req.body.is_full === 'true',
-        contents: req.body.contents,
+        contents: "rack",
         picture: req.file ? req.file.filename : "empty.heic",
     };
 
