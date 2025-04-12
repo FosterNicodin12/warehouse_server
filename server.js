@@ -582,7 +582,7 @@ const bays = [[
   ];
 
   app.get("/api/bays", (req, res)=>{
-    res.send(baysData);
+    res.send(bays);
 });
 
 app.post("/api/bays", upload.single("picture"), (req,res)=>{
