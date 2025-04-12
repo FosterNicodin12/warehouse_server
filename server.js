@@ -9,10 +9,10 @@ app.use(cors());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, "./public/images/");
+    cb(null, "./public/images/");
   },
   filename: (req, file, cb) => {
-      cb(null, file.originalname);
+    cb(null, file.originalname);
   },
 });
 
@@ -22,7 +22,7 @@ app.get("/",(req, res)=>{
   res.sendFile(__dirname+"/index.html");
 });
 
-const bays = [[
+const bays = [
   {
     "bay_number": "Pallets",
     "company": " ",
@@ -578,7 +578,7 @@ const bays = [[
       "is_full": false,
       "contents": "rack"
     }
-  ]
+  
   ];
 
   app.get("/api/bays", (req, res)=>{
@@ -589,10 +589,10 @@ app.post("/api/bays", upload.single("picture"), (req,res)=>{
     const result = validateBay(req.body);
 
     if(result.error){
-        console.log("Validation error:", result.error.details[0].message);
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
+      console.log("I have an error");
+      res.status(400).send(result.error.deatils[0].message);
+      return;
+  }
 
     const newBay = {
         bay_number: req.body.bay_number,
@@ -603,7 +603,7 @@ app.post("/api/bays", upload.single("picture"), (req,res)=>{
         picture: req.file ? req.file.filename : "empty.heic",
     };
 
-    baysData.push(newBay);
+    bays.push(newBay);
     res.status(200).send(newBay);
 });
 
@@ -620,5 +620,5 @@ const validateBay = (bay) => {
 };
 
 app.listen(3001, ()=>{
-    console.log("I'm listening for bays");
+    console.log("I'm listening");
 });
