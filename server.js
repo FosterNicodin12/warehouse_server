@@ -1,9 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+const multer = require("multer");
+const Joi = require("joi");
 const app = express();
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, "./public/images/");
+  },
+  filename: (req, file, cb) => {
+      cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 app.get("/",(req, res)=>{
   res.sendFile(__dirname+"/index.html");
@@ -569,9 +582,43 @@ const bays = [[
   ];
 
   app.get("/api/bays", (req, res)=>{
-    res.send(bays);
+    res.send(baysData);
 });
 
+app.post("/api/bays", upload.single("picture"), (req,res)=>{
+    const result = validateBay(req.body);
+
+    if(result.error){
+        console.log("Validation error:", result.error.details[0].message);
+        res.status(400).send(result.error.details[0].message);
+        return;
+    }
+
+    const newBay = {
+        bay_number: req.body.bay_number,
+        company: req.body.company,
+        container_number: req.body.container_number,
+        is_full: req.body.is_full === 'true',
+        contents: req.body.contents,
+        picture: req.file ? req.file.filename : "empty.heic",
+    };
+
+    baysData.push(newBay);
+    res.status(200).send(newBay);
+});
+
+const validateBay = (bay) => {
+    const schema = Joi.object({
+        bay_number: Joi.string().min(1).required(),
+        company: Joi.string().allow(""),
+        container_number: Joi.string().allow(""),
+        is_full: Joi.string().valid("true", "false").required(),
+        contents: Joi.string().allow(""),
+    });
+
+    return schema.validate(bay);
+};
+
 app.listen(3001, ()=>{
-    console.log("I'm listening");
+    console.log("I'm listening for bays");
 });
