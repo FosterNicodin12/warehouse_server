@@ -613,7 +613,7 @@ const validateBay = (bay) => {
         company: Joi.string().allow(""),
         container_number: Joi.string().allow(""),
         is_full: Joi.string().valid("true", "false").required(),
-        contents: "rack",
+        contents: Joi.string().allow(""),
     });
 
     return schema.validate(bay);
