@@ -585,71 +585,89 @@ const bays = [
     res.send(bays);
 });
 
-app.post("/api/bays", upload.single("picture"), (req, res) => {
-    const result = validateBay(req.body);
+app.put("/api/bays/:bay_number", upload.single("picture"), (req, res) => { // Changed route parameter to :bay_number
+  console.log("Attempting to update bay number:", req.params.bay_number);
+  console.log("Request body:", req.body);
+  const bay = bays.find((b) => b.bay_number === req.params.bay_number); // Finding by bay_number
 
-    if (result.error) {
-        console.log("I have an error");
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
+  if (!bay) {
+      res.status(404).send(`The bay with bay_number ${req.params.bay_number} was not found`);
+      return;
+  }
 
-    const bay = {
-        _id: bays.length, // Added _id for consistency
-        bay_number: req.body.bay_number,
-        company: req.body.company,
-        container_number: req.body.container_number,
-        is_full: req.body.is_full === 'true',
-        contents: req.body.contents, 
-        picture: req.file ? req.file.filename : "empty.heic",
-    };
+  const result = validateBay(req.body);
 
-    bays.push(bay);
-    res.status(200).send(bay);
+  if (result.error) {
+      res.status(400).send(result.error.details[0].message);
+      return;
+  }
+
+  bay.bay_number = req.body.bay_number;
+  bay.company = req.body.company;
+  bay.container_number = req.body.container_number;
+  bay.is_full = req.body.is_full === 'true';
+  bay.contents = req.body.contents;
+
+  if (req.file) {
+      bay.picture = req.file.filename;
+  }
+
+  res.status(200).send(bay);
 });
 
-app.put("/api/bays/:id", upload.single("picture"), (req, res) => {
-    const bay = bays.find((b) => b._id === parseInt(req.params.id));
+app.put("/api/bays/:bay_number", upload.single("picture"), (req, res) => {
+  console.log("--- EDIT BAY REQUEST ---");
+  console.log("Attempting to update bay number:", req.params.bay_number);
+  console.log("Request body:", req.body);
+  console.log("Current bays array before update:", JSON.stringify(bays, null, 2));
 
-    if (!bay) {
-        res.status(404).send("The bay with the provided id was not found");
-        return;
-    }
+  const bayIndex = bays.findIndex((b) => b.bay_number === req.params.bay_number);
 
-    const result = validateBay(req.body);
+  if (bayIndex === -1) {
+      console.log(`Error: Bay with bay_number ${req.params.bay_number} not found.`);
+      res.status(404).send(`The bay with bay_number ${req.params.bay_number} was not found`);
+      return;
+  }
 
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
+  const result = validateBay(req.body);
 
-    bay.bay_number = req.body.bay_number;
-    bay.company = req.body.company;
-    bay.container_number = req.body.container_number;
-    bay.is_full = req.body.is_full === 'true';
-    bay.contents = req.body.contents;
-    
-    if (req.file) {
-        bay.picture = req.file.filename;
-    }
+  if (result.error) {
+      console.log("Validation error:", result.error.details);
+      res.status(400).send(result.error.details[0].message);
+      return;
+  }
 
-    res.status(200).send(bay);
+  // Update the bay object directly using the index
+  bays[bayIndex].bay_number = req.body.bay_number; // While usually the identifier, allow update
+  bays[bayIndex].company = req.body.company;
+  bays[bayIndex].container_number = req.body.container_number;
+  bays[bayIndex].is_full = req.body.is_full === 'true';
+  bays[bayIndex].contents = req.body.contents;
+
+  if (req.file) {
+      console.log("Updating picture:", req.file.originalname);
+      bays[bayIndex].picture = req.file.originalname;
+  } else {
+      console.log("Picture not updated.");
+  }
+
+  console.log("Updated bays array after update:", JSON.stringify(bays, null, 2));
+  res.status(200).send(bays[bayIndex]);
 });
 
-app.delete("/api/bays/:id", (req, res) => {
-    console.log("I'm trying to delete" + req.params.id);
-    const bay = bays.find((b) => b._id === parseInt(req.params.id));
-
-    if (!bay) {
-        console.log("Oh no i wasn't found");
-        res.status(404).send("The bay with the provided id was not found");
-        return;
-    }
-    console.log("YAY You found me");
-    console.log("The bay you are deleting is " + bay.bay_number);
-    const index = bays.indexOf(bay);
-    bays.splice(index, 1);
-    res.status(200).send(bay);
+app.delete("/api/bays/:bay_number", (req, res) => {
+  console.log("Attempting to delete bay number:", req.params.bay_number);
+  console.log("Current bays array:", JSON.stringify(bays, null, 2)); // Log the array with formatting
+  const bay = bays.find((b) => b.bay_number === req.params.bay_number);
+  if (!bay) {
+      console.log("Bay not found with bay_number:", req.params.bay_number);
+      res.status(404).send("The bay with the provided bay_number was not found");
+      return;
+  }
+  console.log("YAY You found me:", bay.bay_number);
+  const index = bays.indexOf(bay);
+  bays.splice(index, 1);
+  res.status(200).send(bay);
 });
 
 const validateBay = (bay) => {
