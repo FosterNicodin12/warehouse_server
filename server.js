@@ -581,44 +581,90 @@ const bays = [
   
   ];
 
-  app.get("/api/bays", (req, res)=>{
+  app.get("/api/bays", (req, res) => {
     res.send(bays);
 });
 
-app.post("/api/bays", upload.single("picture"), (req,res)=>{
+app.post("/api/bays", upload.single("picture"), (req, res) => {
     const result = validateBay(req.body);
 
-    if(result.error){
-      console.log("I have an error");
-      res.status(400).send(result.error.deatils[0].message);
-      return;
-  }
+    if (result.error) {
+        console.log("I have an error");
+        res.status(400).send(result.error.details[0].message);
+        return;
+    }
 
-    const newBay = {
+    const bay = {
+        _id: bays.length, // Added _id for consistency
         bay_number: req.body.bay_number,
         company: req.body.company,
         container_number: req.body.container_number,
         is_full: req.body.is_full === 'true',
-        contents: "rack",
+        contents: req.body.contents, 
         picture: req.file ? req.file.filename : "empty.heic",
     };
 
-    bays.push(newBay);
-    res.status(200).send(newBay);
+    bays.push(bay);
+    res.status(200).send(bay);
+});
+
+app.put("/api/bays/:id", upload.single("picture"), (req, res) => {
+    const bay = bays.find((b) => b._id === parseInt(req.params.id));
+
+    if (!bay) {
+        res.status(404).send("The bay with the provided id was not found");
+        return;
+    }
+
+    const result = validateBay(req.body);
+
+    if (result.error) {
+        res.status(400).send(result.error.details[0].message);
+        return;
+    }
+
+    bay.bay_number = req.body.bay_number;
+    bay.company = req.body.company;
+    bay.container_number = req.body.container_number;
+    bay.is_full = req.body.is_full === 'true';
+    bay.contents = req.body.contents;
+    
+    if (req.file) {
+        bay.picture = req.file.filename;
+    }
+
+    res.status(200).send(bay);
+});
+
+app.delete("/api/bays/:id", (req, res) => {
+    console.log("I'm trying to delete" + req.params.id);
+    const bay = bays.find((b) => b._id === parseInt(req.params.id));
+
+    if (!bay) {
+        console.log("Oh no i wasn't found");
+        res.status(404).send("The bay with the provided id was not found");
+        return;
+    }
+    console.log("YAY You found me");
+    console.log("The bay you are deleting is " + bay.bay_number);
+    const index = bays.indexOf(bay);
+    bays.splice(index, 1);
+    res.status(200).send(bay);
 });
 
 const validateBay = (bay) => {
     const schema = Joi.object({
+        _id: Joi.allow(""),
         bay_number: Joi.string().min(1).required(),
         company: Joi.string().allow(""),
         container_number: Joi.string().allow(""),
         is_full: Joi.string().valid("true", "false").required(),
         contents: Joi.string().allow(""),
+        picture: Joi.string().allow(""),
     });
-
     return schema.validate(bay);
 };
 
-app.listen(3001, ()=>{
+app.listen(3001, () => {
     console.log("I'm listening");
 });
