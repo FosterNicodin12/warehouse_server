@@ -8,7 +8,16 @@ app.use(express.json());
 app.use(cors());
 const mongoose = require("mongoose");
 
-// ... (Your Mongoose connection code)
+mongoose
+  .connect(
+    "mongodb+srv://nnicodin:Foster12!@bays.bfvuzjs.mongodb.net/?retryWrites=true&w=majority&appName=Bays"
+  )
+  .then(() => {
+    console.log("connect to mongodb");
+  })
+  .catch((error) => {
+    console.log("couldn't connect to mongodb", error);
+  });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -35,8 +44,16 @@ const upload = multer({
   },
 });
 
-// ... (Your Mongoose schema and model)
+const baySchema = new mongoose.Schema({
+  bay_number: String,
+  company: String,
+  picture: String,
+  container_number: String,
+  is_full: Boolean,
+  contents: String,
+});
 
+const Bay = mongoose.model("Bay", baySchema);
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
