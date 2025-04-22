@@ -2,12 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const Joi = require("joi");
+const mongoose = require("mongoose");
 const app = express();
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
-const mongoose = require("mongoose");
 
+// MongoDB Connection
 mongoose
   .connect(
     "mongodb+srv://nnicodin:Foster12!@bays.bfvuzjs.mongodb.net/?retryWrites=true&w=majority&appName=Bays"
@@ -19,6 +20,7 @@ mongoose
     console.log("couldn't connect to mongodb", error);
   });
 
+// Multer Configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public/images/");
@@ -32,7 +34,7 @@ const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
-    cb(new Error("Invalid file type. Only images are allowed."), false);
+    cb(null, false); // Reject invalid file types
   }
 };
 
@@ -44,16 +46,19 @@ const upload = multer({
   },
 });
 
+// Mongoose Schema and Model
 const baySchema = new mongoose.Schema({
-  bay_number: String,
+  bay_number: { type: String, required: true, unique: true }, // Added required and unique
   company: String,
   picture: String,
   container_number: String,
-  is_full: Boolean,
+  is_full: { type: Boolean, required: true }, // Added required
   contents: String,
 });
 
 const Bay = mongoose.model("Bay", baySchema);
+
+// Routes
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
@@ -63,15 +68,15 @@ app.get("/api/bays", async (req, res) => {
     const bays = await Bay.find();
     res.status(200).send(bays);
   } catch (error) {
-    console.error("Error fetching bays:", error);
+    console.error("GET /api/bays error:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
 app.post("/api/bays", upload.single("img"), async (req, res) => {
   const result = validateBay(req.body);
-
   if (result.error) {
+    console.error("POST /api/bays validation error:", result.error);
     res.status(400).send(result.error.details[0].message);
     return;
   }
@@ -90,17 +95,21 @@ app.post("/api/bays", upload.single("img"), async (req, res) => {
 
   try {
     const newBay = await bay.save();
-    res.status(201).send(newBay); // Use 201 for successful creation
+    res.status(201).send(newBay);
   } catch (error) {
-    console.error("Error creating bay:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("POST /api/bays save error:", error);
+    if (error.code === 11000) {
+      res.status(400).send("Bay number already exists.");
+    } else {
+      res.status(500).send("Internal Server Error");
+    }
   }
 });
 
-app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
+app.put("/api/bays/:bay_number", upload.single("img"), async (req, res) => {
   const result = validateBay(req.body);
-
   if (result.error) {
+    console.error("PUT /api/bays/:bay_number validation error:", result.error);
     res.status(400).send(result.error.details[0].message);
     return;
   }
@@ -118,29 +127,33 @@ app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
 
   try {
     const updatedBay = await Bay.findOneAndUpdate(
-      { bay_number: req.params.bay_number },  // Use findOneAndUpdate
+      { bay_number: req.params.bay_number }, // Use bay_number to find
       fieldsToUpdate,
-      { new: true } // Return the updated document
+      { new: true, runValidators: true } // Return updated and run validation
     );
-        if (!updatedBay) {
-          return res.status(404).send("Bay not found");
-        }
+    if (!updatedBay) {
+      console.error("PUT /api/bays/:bay_number: Bay not found");
+      return res.status(404).send("Bay not found");
+    }
     res.status(200).send(updatedBay);
   } catch (error) {
-    console.error("Error updating bay:", error);
+    console.error("PUT /api/bays/:bay_number update error:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
 app.delete("/api/bays/:bay_number", async (req, res) => {
   try {
-        const deletedBay = await Bay.findOneAndDelete({ bay_number: req.params.bay_number });
-        if (!deletedBay) {
-             return res.status(404).send("Bay not found");
-        }
+    const deletedBay = await Bay.findOneAndDelete({
+      bay_number: req.params.bay_number,
+    });
+    if (!deletedBay) {
+      console.error("DELETE /api/bays/:bay_number: Bay not found");
+      return res.status(404).send("Bay not found");
+    }
     res.status(200).send(deletedBay);
   } catch (error) {
-    console.error("Error deleting bay:", error);
+    console.error("DELETE /api/bays/:bay_number delete error:", error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -158,7 +171,7 @@ const validateBay = (bay) => {
 
 // Error handling middleware (example)
 app.use((err, req, res, next) => {
-  console.error(err); // Log the error
+  console.error("Global error handler:", err); // Log the error
   if (err instanceof multer.MulterError) {
     res.status(400).send(err.message);
   } else {
