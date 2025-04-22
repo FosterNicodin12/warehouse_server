@@ -8,6 +8,8 @@ app.use(express.json());
 app.use(cors());
 const mongoose = require("mongoose");
 
+// ... (Your Mongoose connection code)
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public/images/");
@@ -17,45 +19,42 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type. Only images are allowed."), false);
+  }
+};
 
-mongoose
-  .connect(
-    "mongodb+srv://nnicodin:Foster12!@bays.bfvuzjs.mongodb.net/?retryWrites=true&w=majority&appName=Bays"
-  )
-  .then(() => {
-    console.log("connect to mongodb");
-  })
-  .catch((error) => {
-    console.log("couldn't connect to mongodb", error);
-  });
-
-const baySchema = new mongoose.Schema({
-  bay_number: String,
-  company: String,
-  picture: String,
-  container_number: String,
-  is_full: Boolean,
-  contents: String,
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
 });
 
-const Bay = mongoose.model("Bay", baySchema);
+// ... (Your Mongoose schema and model)
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
 app.get("/api/bays", async (req, res) => {
-  const bays = await Bay.find();
-  res.send(bays);
-  console.log(bays);
+  try {
+    const bays = await Bay.find();
+    res.status(200).send(bays);
+  } catch (error) {
+    console.error("Error fetching bays:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/api/bays", upload.single("img"), async (req, res) => {
   const result = validateBay(req.body);
 
   if (result.error) {
-    console.log("I have an error");
     res.status(400).send(result.error.details[0].message);
     return;
   }
@@ -72,8 +71,13 @@ app.post("/api/bays", upload.single("img"), async (req, res) => {
     bay.picture = req.file.filename;
   }
 
-  const newBay = await bay.save();
-  res.status(200).send(newBay);
+  try {
+    const newBay = await bay.save();
+    res.status(201).send(newBay); // Use 201 for successful creation
+  } catch (error) {
+    console.error("Error creating bay:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
@@ -85,7 +89,6 @@ app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
   }
 
   const fieldsToUpdate = {
-    bay_number: req.body.bay_number,
     company: req.body.company,
     container_number: req.body.container_number,
     is_full: req.body.is_full === "true",
@@ -96,17 +99,33 @@ app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
     fieldsToUpdate.picture = req.file.filename;
   }
 
-  await Bay.updateOne({ bay_number: req.params.bay_number }, fieldsToUpdate);
-  const bay = await Bay.findOne({ bay_number: req.params.bay_number });
-
-
-  res.status(200).send(bay);
+  try {
+    const updatedBay = await Bay.findOneAndUpdate(
+      { bay_number: req.params.bay_number },  // Use findOneAndUpdate
+      fieldsToUpdate,
+      { new: true } // Return the updated document
+    );
+        if (!updatedBay) {
+          return res.status(404).send("Bay not found");
+        }
+    res.status(200).send(updatedBay);
+  } catch (error) {
+    console.error("Error updating bay:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-
 app.delete("/api/bays/:bay_number", async (req, res) => {
-  const bay = await Bay.findByIdAndDelete(req.params.bay_number);
-  res.status(200).send(bay);
+  try {
+        const deletedBay = await Bay.findOneAndDelete({ bay_number: req.params.bay_number });
+        if (!deletedBay) {
+             return res.status(404).send("Bay not found");
+        }
+    res.status(200).send(deletedBay);
+  } catch (error) {
+    console.error("Error deleting bay:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 const validateBay = (bay) => {
@@ -116,10 +135,19 @@ const validateBay = (bay) => {
     container_number: Joi.string().allow(""),
     is_full: Joi.string().valid("true", "false").required(),
     contents: Joi.string().allow(""),
-    picture: Joi.string().allow(""),
   });
   return schema.validate(bay);
 };
+
+// Error handling middleware (example)
+app.use((err, req, res, next) => {
+  console.error(err); // Log the error
+  if (err instanceof multer.MulterError) {
+    res.status(400).send(err.message);
+  } else {
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.listen(3001, () => {
   console.log("I'm listening");
