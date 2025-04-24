@@ -52,20 +52,26 @@ app.get("/api/bays", async (req, res) => {
 });
 
 app.post("/api/bays", upload.single("picture"), async (req, res) => {
+  console.log("Received POST request to /api/bays");
+  console.log("Request Body:", req.body);
+  if (req.file) {
+    console.log("Uploaded File:", req.file);
+  } else {
+    console.log("No file uploaded.");
+  }
   try {
     const result = validateBay(req.body);
 
     if (result.error) {
       console.log("Validation Error:", result.error.details);
-      res.status(400).send(result.error.details[0].message);
-      return;
+      return res.status(400).send(result.error.details[0].message);
     }
 
     const bay = new Bay({
       bay_number: req.body.bay_number,
       company: req.body.company,
       container_number: req.body.container_number,
-      is_full: req.body.is_full, // Changed to use the boolean value directly
+      is_full: req.body.is_full,
       contents: req.body.contents,
     });
 
@@ -74,10 +80,12 @@ app.post("/api/bays", upload.single("picture"), async (req, res) => {
     }
 
     const newBay = await bay.save();
+    console.log("New bay saved successfully:", newBay); // Log the saved object
     res.status(200).send(newBay);
+    console.log("Response sent:", newBay); // Log after sending the response
   } catch (error) {
     console.error("Error adding bay:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(error.message || "Internal Server Error");
   }
 });
 
