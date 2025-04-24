@@ -100,7 +100,6 @@ app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
   }
 
   const fieldsToUpdate = {
-    bay_number: req.body.bay_number,
     company: req.body.company,
     container_number: req.body.container_number,
     is_full: req.body.is_full,
