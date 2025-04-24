@@ -72,7 +72,7 @@ app.post("/api/bays", upload.single("picture"), async (req, res) => {
       company: req.body.company,
       container_number: req.body.container_number,
       is_full: req.body.is_full,
-      contents: req.body.contents,
+      contents: req.body.contents === undefined ? "rack" : req.body.contents,
     });
 
     if (req.file) {
@@ -101,7 +101,7 @@ app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
     bay_number: req.body.bay_number,
     company: req.body.company,
     container_number: req.body.container_number,
-    is_full: req.body.is_full, // Changed to use the boolean value directly
+    is_full: req.body.is_full,
     contents: req.body.contents,
   };
 
