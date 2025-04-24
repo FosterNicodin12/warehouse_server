@@ -126,7 +126,7 @@ app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
 });
 
 app.delete("/api/bays/:bay_number", async (req, res) => {
-  const bay = await Bay.findByIdAndDelete(req.params.bay_number);
+  const bay = await Bay.findOneAndDelete({ bay_number: req.params.bay_number });
   res.status(200).send(bay);
 });
 
