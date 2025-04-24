@@ -51,6 +51,39 @@ app.get("/api/bays", async (req, res) => {
   console.log(bays);
 });
 
+app.post("/api/bays", upload.single("picture"), async (req, res) => {
+  try {
+    const result = validateBay(req.body);
+
+    if (result.error) {
+      console.log("Validation Error:", result.error.details);
+      return res.status(400).send(result.error.details[0].message);
+    }
+
+    const bayData = {
+      bay_number: req.body.bay_number,
+      company: req.body.company,
+      container_number: req.body.container_number,
+      is_full: req.body.is_full,
+      contents: req.body.contents === undefined ? "rack" : req.body.contents,
+    };
+
+    const bay = new Bay(bayData);
+
+    if (req.file) {
+      bay.picture = req.file.filename;
+    }
+
+    const newBay = await bay.save();
+    console.log("New bay saved successfully:", newBay);
+    res.status(200).send(newBay);
+    console.log("Response sent:", newBay);
+  } catch (error) {
+    console.error("Error adding bay:", error);
+    res.status(500).send(error.message || "Internal Server Error");
+  }
+});
+
 app.put("/api/bays/:bay_number", upload.single("picture"), async (req, res) => {
   console.log(`Received PUT request for bay number: ${req.params.bay_number}`);
   console.log("Request Body:", req.body);
