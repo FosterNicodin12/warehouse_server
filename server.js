@@ -51,7 +51,7 @@ app.get("/api/bays", async (req, res) => {
   console.log(bays);
 });
 
-app.post("/api/bays", upload.single("img"), async (req, res) => {
+app.post("/api/bays", upload.single("picture"), async (req, res) => {
   try {
     const result = validateBay(req.body);
 
